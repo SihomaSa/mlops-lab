@@ -1,33 +1,27 @@
 model:
-  best_model: RandomForest
-  feature_sets:
-    selected_features:
-    - sqft_living
-    - bedrooms
-    - bathrooms
-    - grade
-    - view
-  mae: 12006.666666666668
   name: house_price_model
+  best_model: RandomForest # Resultado de experimentación
   parameters:
-    bootstrap: true
-    ccp_alpha: 0.0
-    criterion: squared_error
+    n_estimators: 200
     max_depth: 15
-    max_features: 1.0
-    max_leaf_nodes: null
-    max_samples: null
-    min_impurity_decrease: 0.0
-    min_samples_leaf: 1
-    min_samples_split: 2
-    min_weight_fraction_leaf: 0.0
-    monotonic_cst: null
-    n_estimators: 150
-    n_jobs: null
-    oob_score: false
-    random_state: null
-    verbose: 0
-    warm_start: false
-  r2_score: 0.9923079254541115
-  rmse: 18928.616049662898
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+  r2_score: 0.8756
+  mae: 15234.67
   target_variable: price
+  feature_sets:
+    rfe:
+      - sqft
+      - house_age
+      - bedrooms
+      - bathrooms
+      - price_per_sqft
+      - bed_bath_ratio
+      - location_Suburb
+      - condition_Good
+      - year_built
+      - condition_Excellent
+    rfe_method: RandomForestRegressor
+    total_features: 25
+    selected_features_count: 10
