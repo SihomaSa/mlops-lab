@@ -1,4 +1,5 @@
 model:
+<<<<<<< HEAD
   best_model: RandomForest
   feature_sets:
     selected_features:
@@ -31,3 +32,31 @@ model:
   r2_score: 0.9943515741253852
   rmse: 16220.372992012237
   target_variable: price
+=======
+  name: house_price_model
+  best_model: RandomForest # Resultado de experimentación
+  parameters:
+    n_estimators: 200
+    max_depth: 15
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+  r2_score: 0.8756
+  mae: 15234.67
+  target_variable: price
+  feature_sets:
+    rfe:
+      - sqft
+      - house_age
+      - bedrooms
+      - bathrooms
+      - price_per_sqft
+      - bed_bath_ratio
+      - location_Suburb
+      - condition_Good
+      - year_built
+      - condition_Excellent
+    rfe_method: RandomForestRegressor
+    total_features: 25
+    selected_features_count: 10
+>>>>>>> 761216c7034c29ef9326bd043ecf2254529d38a8
