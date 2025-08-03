@@ -1,67 +1,33 @@
-name: MLOps Pipeline
-
-on:
-  workflow_dispatch:
-    inputs:
-      run_all:
-        description: "Run all jobs"
-        required: false
-        default: "true"
-
-jobs:
-  data-processing:
-    name: Data Processing
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.11.9"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Process data
-        run: |
-          python src/data/run_processing.py --input data/raw/house_data.csv --output data/processed/cleaned_house_data.csv
-
-      - name: Upload processed data
-        uses: actions/upload-artifact@v4
-        with:
-          name: processed-data
-          path: data/processed/cleaned_house_data.csv
-
-  feature-engineering:
-    name: Feature Engineering
-    needs: data-processing
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.11.9"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Download processed data
-        uses: actions/download-artifact@v4
-        with:
-          name: processed-data
-          path: data/processed/
-
-      - name: Engineer features
-        run: |
-          python src/features/engineer.py --input data/processed/cleaned_house_data.csv --output data/processed/featured_house_data.csv --preprocessor models/trained/preprocessor.pkl
+model:
+  best_model: RandomForest
+  feature_sets:
+    selected_features:
+    - sqft_living
+    - bedrooms
+    - bathrooms
+    - grade
+    - view
+  mae: 12322.5
+  name: house_price_model
+  parameters:
+    bootstrap: true
+    ccp_alpha: 0.0
+    criterion: squared_error
+    max_depth: 25
+    max_features: 1.0
+    max_leaf_nodes: null
+    max_samples: null
+    min_impurity_decrease: 0.0
+    min_samples_leaf: 1
+    min_samples_split: 2
+    min_weight_fraction_leaf: 0.0
+    monotonic_cst: null
+    n_estimators: 50
+    n_jobs: null
+    oob_score: false
+    random_state: null
+    verbose: 0
+    warm_start: false
+  r2_score: 0.9943515741253852
+  rmse: 16220.372992012237
+  target_variable: price
